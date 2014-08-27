@@ -2,7 +2,7 @@
 #include <set>
 #include "User.h"
 #include "Field.h"
-using std::set;
+using std::multiset;
 
 User::AddMonsterInfo::AddMonsterInfo(const Monster* p, const Monster* n, list<const Monster*>::iterator h) : prev(p), next(n), huntMonsterItr(h)
 {
@@ -354,7 +354,7 @@ bool User::HuntExtMonster(const Monster* extMonster)
     unsigned int extExp = extMonster->GetExp();
 
     // 현재까지 사냥한 몬스터들을 가중치로 정렬하여 huntSet에 저장
-    set<MonsterInfo> huntSet;
+    multiset<MonsterInfo> huntSet;
     
     // huntSet의 첫 요소
     list<const Monster*>::iterator huntItr = _huntList.begin(), prevHuntItr = huntItr;
@@ -403,7 +403,7 @@ bool User::HuntExtMonster(const Monster* extMonster)
         }*/
 
         // 가장 효율이 안좋은 반복자를 찾음
-        set<MonsterInfo>::iterator huntSetItr = huntSet.begin();
+        multiset<MonsterInfo>::iterator huntSetItr = huntSet.begin();
         
         // 그 반복자의 몬스터 반복자와 앞 뒤를 찾음
         list<const Monster*>::iterator curMonItr = (*huntSetItr).pos;
@@ -434,7 +434,7 @@ bool User::HuntExtMonster(const Monster* extMonster)
         // 목록 제외에 따른 nextMon의 이동거리 및 가중치 재계산
         list<const Monster*>::iterator findPos;
         // 먼저 nextMon을 huntSet에서 찾아 제외시킴
-        set<MonsterInfo>::iterator nextFindItr;
+        multiset<MonsterInfo>::iterator nextFindItr;
         for (nextFindItr = huntSet.begin(); nextFindItr != huntSet.end(); nextFindItr++)
         {
             const Monster* findMon = *(*nextFindItr).pos;
